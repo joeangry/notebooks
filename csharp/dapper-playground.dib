@@ -1,0 +1,21 @@
+#!meta
+
+{"kernelInfo":{"defaultKernelName":"csharp","items":[{"aliases":[],"languageName":"csharp","name":"csharp"}]}}
+
+#!csharp
+
+#i "nuget:https://api.nuget.org/v3/index.json"
+#r "nuget:Dapper, 2.0.143"
+#r "nuget:Microsoft.Data.SqlClient, 5.1.1"
+
+using Dapper;
+using Microsoft.Data.SqlClient;
+
+using (var connection = new SqlConnection("Server=.;Database=master;MultipleActiveResultSets=false;Integrated Security=True;TrustServerCertificate=True;"))
+{
+    const string sql = "SELECT @@VERSION";
+
+    var version = connection.Query<string>(sql).First();
+
+    Console.WriteLine(version);
+}
